@@ -8,20 +8,23 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  UseGuards,
   UsePipes,
 } from '@nestjs/common';
 import { Observable, of } from 'rxjs';
+import { AuthGuard } from 'src/guards/auth.guard';
 import { CatsService } from './cats.service';
 import { CreateCatDto } from './dto/create-cat.dto';
 import { CatSchema } from './interfaces/cat.interface';
 import { JoiValidationPipe } from './pipes/validation.pipe';
 
 @Controller('cats')
+@UseGuards(AuthGuard)
 export class CatsController {
   constructor(private catsService: CatsService) {}
 
   @Get()
-  @HttpCode(300)
+  // @HttpCode(300)
   findAll() {
     return this.catsService.findAll();
   }
